@@ -12,7 +12,7 @@ import { faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons'
 import swal from 'sweetalert';
 
 // A regénérer sur https://developer.spotify.com/console/get-current-user-saved-tracks/
-const apiToken = 'BQAeJDjX076ZzTvxQ_xKhLWp2Jk3T23ZWbMWrR2vPFoNF_YyS7F50Uc5Wd9vWcTV5yEFzXPlXFDivIiLSzbpJM0-jcSmWoMAaea0kYw3b-XiuV_t_QZRxORkKJHSEa89dtpcE6ereIlHw9KCmNd4ur9LGSCHFRCIK-TKoUC8t5DbvD-T';
+const apiToken = 'BQA9xekWgTSTxnZBDd61Jeu0kiBOJ8icfD6d2HdP7bqN9yQRBm321pPjJvNQilFmWhjTYtFPvMIOXss-aDiRTZJ_9k_a8vZGDvYNYpDyqMlWMkWO5cDjIf7NEg2BD99vI1s1VUoeQ8hsUPnkydD2jGof0gPIAAicevooKvPfL9ip5it_';
 
 function getRandomNumber(x) {
   /* Return a random number between 0 included and x excluded */
@@ -39,7 +39,7 @@ const AlbumCover = ({ currentTrack }) => {
 };
 
 const Launcher = ({ play, set }) => {
-  const icon = play ? faPlayCircle : faPauseCircle 
+  const icon = play ? faPauseCircle : faPlayCircle 
   return (
     <Button onClick={() => { set(!play) }}><FontAwesomeIcon icon={ icon } /></Button>
   )
@@ -72,14 +72,13 @@ const App = () => {
   const [current, setCurrent] = useState('');
 
   const checkAnswer = (id) => {
-    if (current == id){
+    if (current === id){
       console.log('Right answer');
       swal('Bravo', "C'est le bon morceau", 'success');
     }
     else{
       console.log('Wrong answer');
-      console.log('Current : ', current);
-      console.log('Selected : ', id);
+      swal('Dommage', 'Essaie encore', 'error');
     }
   }
 
@@ -93,7 +92,7 @@ const App = () => {
       .then(response => response.json())
       .then((data) => {
         setTracks(data.items);
-        setCurrent(data.items[0].track.id);
+        setCurrent(data.items[0].track.id); // getRandomNumber(data.items.length) au lieu de 0
         setTrack1(data.items[0]);
         setTrack2(data.items[1]);
         setTrack3(data.items[2]);
